@@ -56,5 +56,9 @@ $personas = $conn->query("SELECT id, nombre, apellido FROM personas ORDER BY ape
 
     <button type="submit">Registrar Préstamo</button>
 </form>
+
+
+     <a href="index.php">volver al inicio</a>
+
 </body>
 </html>
