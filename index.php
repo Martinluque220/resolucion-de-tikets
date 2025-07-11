@@ -1,6 +1,9 @@
 <?php
-
+session_start();
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Sat, 1 Jul 2000 05:00:00 GMT"); 
 include("menu_bs.php");
+
 echo '
 <div class="container-fluid" id="capa_T">
 	<div class="row">
