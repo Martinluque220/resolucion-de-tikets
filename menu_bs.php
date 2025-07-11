@@ -1,10 +1,10 @@
 <?php
-session_start();
-
-// SOLO PARA PRUEBA: mostrar valores de sesión
-echo "<pre>Rol: ".@$_SESSION['rol']." | Usuario: ".@$_SESSION['username']."</pre>";
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -76,7 +76,7 @@ echo "<pre>Rol: ".@$_SESSION['rol']." | Usuario: ".@$_SESSION['username']."</pre
           <ul class="dropdown-menu">
             <li><a href="listar_libros.php">Listado de Libros</a></li>
             <li><a href="registrar_prestamo.php">Registrar Préstamo</a></li>
-            <li><a href="listar_prestamos.php">Préstamos Activos</a></li>
+            <li><a href="lista_prestamos.php">Préstamos Activos</a></li>
           </ul>
         </li>
 
