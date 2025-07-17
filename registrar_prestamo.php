@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha_prestamo = date('Y-m-d');
 
     // Insertar préstamo (activo, sin fecha devolución aún)
-    $sql = "INSERT INTO prestamos (id_libro, id_persona, fecha_prestamo) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO prestamos_libros (id_libro, id_persona, fecha_prestamo) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iis", $id_libro, $id_persona, $fecha_prestamo);
     if($stmt->execute()){
@@ -62,3 +62,4 @@ $personas = $conn->query("SELECT id, nombre, apellido FROM personas ORDER BY ape
 
 </body>
 </html>
+
