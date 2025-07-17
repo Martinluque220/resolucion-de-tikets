@@ -1,24 +1,26 @@
 <?php
 include_once("libreria/conexion.php");
 
-$conn = conexion();
+$conexion = new Conexion();
+$conn = $conexion->getConexion();
 
-if(isset($_GET['devolver'])){
+// Marcar devolución si se recibe el parámetro
+if (isset($_GET['devolver'])) {
     $id_prestamo = intval($_GET['devolver']);
-    $fecha_devolucion = date('Y-m-d');
+    $fecha_devolucion_real = date('Y-m-d');
 
-    $sql = "UPDATE prestamos SET fecha_devolucion = ? WHERE id_prestamo = ?";
+    $sql = "UPDATE prestamos_libros SET fecha_devolucion_real = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $fecha_devolucion, $id_prestamo);
+    $stmt->bind_param("si", $fecha_devolucion_real, $id_prestamo);
     $stmt->execute();
 }
 
-// Traer préstamos activos (sin devolución)
-$sql = "SELECT p.id_prestamo, l.Titulo, per.nombre, per.apellido, p.fecha_prestamo
-        FROM prestamos p
+// Consulta para traer préstamos activos (sin devolución real)
+$sql = "SELECT p.id, l.Titulo, per.nombre, per.apellido, p.fecha_prestamo
+        FROM prestamos_libros p
         JOIN libros_d l ON p.id_libro = l.id_libro
         JOIN personas per ON p.id_persona = per.id
-        WHERE p.fecha_devolucion IS NULL
+        WHERE p.fecha_devolucion_real IS NULL
         ORDER BY p.fecha_prestamo";
 
 $result = $conn->query($sql);
@@ -46,14 +48,19 @@ $result = $conn->query($sql);
     <tbody>
         <?php while($row = $result->fetch_assoc()): ?>
         <tr>
-            <td><?= $row['id_prestamo'] ?></td>
+            <td><?= $row['id'] ?></td>
             <td><?= htmlspecialchars($row['Titulo']) ?></td>
             <td><?= htmlspecialchars($row['apellido'] . ", " . $row['nombre']) ?></td>
             <td><?= $row['fecha_prestamo'] ?></td>
-            <td><a href="?devolver=<?= $row['id_prestamo'] ?>" onclick="return confirm('Confirmar devolución?')">Devolver</a></td>
+            <td><a href="?devolver=<?= $row['id'] ?>" onclick="return confirm('Confirmar devolución?')">Devolver</a></td>
         </tr>
         <?php endwhile; ?>
     </tbody>
 </table>
+
+
+<li><a href="index.php">Volver al inicio</a></li>
+
 </body>
 </html>
+
