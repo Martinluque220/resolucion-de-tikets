@@ -1,7 +1,7 @@
 <?php
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
-define('DB_PASS', '');  
+define('DB_PASS', '');
 define('DB_NAME', 'biblio_t1');
 
 function conectar() {
@@ -10,5 +10,9 @@ function conectar() {
         die('Error de conexión: ' . $conn->connect_error);
     }
     return $conn;
+}
+
+function formatDate($date) {
+    return date('g:i a', strtotime($date));
 }
 ?>
